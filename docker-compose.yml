@@ -1,0 +1,22 @@
+version: "3.6"
+
+services: 
+  db:
+    build: 
+      context: ./db
+      dockerfile: ./Dockerfile
+    image: my_docker_mysql
+    container_name: mysql-container
+    ports: 
+      - "3306:3306"
+    command: mysqld --default-authentication-plugin=mysql_native_password
+    stdin_open: true
+    tty: true
+    volumes: 
+      - ./db/backups:/.tmp
+      - ./db/sqlFile/:/sqlFile/
+    env_file:
+      - ./db/config/.env #Ne felejsd ezt nem hozza vissza a git
+      #environment: #b terv...
+      #- MYSQL_ROOT_PASSWORD=<pass>
+      #- MYSQL_ROOT_USER=<user>
